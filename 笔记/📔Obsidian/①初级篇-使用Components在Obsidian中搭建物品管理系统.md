@@ -3,7 +3,7 @@ comment: true
 tags:
   - obsidian/components
 link: https://mp.weixin.qq.com/s/9o7IFytcw1uk6peW0e9r4g
-finished: 2024-09-19
+finished: 2024-09-19T12:00:00
 progress: 100%
 ---
 
