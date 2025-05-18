@@ -118,6 +118,13 @@ const ExtendedTheme: Theme = {
             type: 'tags',
             title: '标签',
           },
+
+          {
+            key: 'finished',
+            type: 'Date',
+            title: '发表时间',
+          },
+
           {
             key: 'progress',
             type: 'progress',
