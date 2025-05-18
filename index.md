@@ -7,7 +7,7 @@ titleTemplate: 成长型博主的数字花园
 
 hero:
   name: 自权
-  text: 浅层学习满足输入，深度学习注重输出
+  text: 浅层学习满足输入 深度学习注重输出
   tagline: 获取高质量的知识以及深度缝接新知识，再用自己的语言或文字教授他人——《认知觉醒》
   image:
     src: /logo.svg
