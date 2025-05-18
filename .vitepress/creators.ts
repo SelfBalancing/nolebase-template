@@ -22,7 +22,7 @@ export const creators: Creator[] = [
   {
     name: '自权的SPACE',
     avatar: '',
-    username: '自权',
+    username: 'SelfBalancing',
     title: '公众号撰写者',
     desc: '前端、设计、计算机科学',
     links: [
