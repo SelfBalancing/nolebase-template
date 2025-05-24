@@ -518,7 +518,7 @@ https://giscus.app/zh-CN
 - 评论系统：Giscus（基于GitHub Discussions） 
 
 无需深入理解Web服务器原理，即可掌握「版本控制-静态网站-自动化部署」的完整流程； 
-对**内容创作者**：专注Markdown写作，无需处理后端逻辑，在Obsidian的沉浸式编辑
+对内容创作者：专注Markdown写作，无需处理后端逻辑，在Obsidian的沉浸式编辑
 
 「极简技术栈+最大自由度」，从点击「Fork」按钮开始，开启属于自己的博客写作之旅！
 
