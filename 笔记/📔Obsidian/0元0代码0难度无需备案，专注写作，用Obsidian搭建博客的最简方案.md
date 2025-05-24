@@ -1,0 +1,524 @@
+---
+comment: true
+tags:
+  - 博客
+---
+
+
+
+去年6月我根据教程基于Github
+搭建了一个十分简易的博客
+简单到十几秒就能搭建好
+（可以点击下方查看）
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%A8%E6%8C%91%E6%88%980%E5%85%83%EF%BC%810%E4%BB%A3%E7%A0%81%EF%BC%810%E9%9A%BE%E5%BA%A6%EF%BC%81%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%96%87%E7%AB%A0%E5%8D%9A%E5%AE%A2%E7%BD%91%E9%A1%B5%EF%BC%81.png)
+当时就是看中它的简易了
+选择的方案是**极简静态博客框架**，全程仅需在GitHub点击「Fork」按钮，配合自动化脚本，**15秒内即可完成初始化部署**
+支持基础的响应式布局，桌面端和移动端显示效果均符合预期
+视觉效果还可以
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518110746.png)
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518110719.png)
+
+但还是过于简易了
+而且每次发布都提个issue也还是挺麻烦的
+
+
+自那以后我也在关注其他的博客实现思路
+
+有两种主流的实现思路
+一种是国际思路
+但是网络要求高
+我在Vercel上尝试部署过，因为网络原因，没成功过
+Vercel控制台访问不稳定，部署过程中频繁出现DNS解析失败
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/Clipboard%20-%202025-05-19%2023.17.08.png)
+
+另一种是国内思路
+网络环境好，访问也很快
+但是有**备案强制要求**：根据《互联网信息服务管理办法》，域名需通过工信部备案，流程耗时15-30天； -
+而且**技术冗余度高**：WordPress对静态博客场景存在「性能过剩」，后台管理界面复杂，非必要功能占比超60%
+
+
+除此以外
+大部分的博客功能强大，界面美观
+但是搭建过程比较麻烦
+涉及到很多命令行操作
+有些需要魔法访问的网络环境
+对很多人来说都是一道又一道坎
+
+因此很多实现思路我在尝试过后又选择了放弃
+
+但是今天这个路子真可以推荐大家一试
+
+搭建过程简单，涵盖基本功能，界面美观实用
+而且写博客的访问很简单
+就跟在Obsidian写笔记一样
+
+
+## 博客演示
+
+
+可以通过
+```
+https://obsidiannote.netlify.app
+```
+访问查看
+也可以通过我自定义的域名进行访问
+```
+https://selfbalance.top
+```
+
+
+### 主页
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524113920.png)
+
+**动态主题切换**：支持明暗模式自动切换，基于CSS变量实现，切换过程无闪烁； 
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524114023.png)
+
+
+### 笔记界面
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524114134.png)
+
+大纲导航系统：右侧自动生成Markdown大纲，支持点击跳转，提升长文阅读体验；
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/PixPin_2025-05-24_11-43-35.gif)
+
+
+
+手机端体验也很不错
+图片支持双指缩放，链接点击区域扩大至44px×44px，符合移动端交互规范； 
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/e9f6e7285190f96f8dce534f57e7587.jpg)
+
+
+### 支持评论
+
+**GitHub评论系统**：集成Giscus组件，用户可通过GitHub账号评论，评论数据存储于GitHub Discussions，天然支持Markdown格式；
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524161718.png)
+
+
+
+> [!danger] 开启评论需要以下两点要求
+> 1. 笔记添加comment属性
+> 2. 完成Giscus相关配置（下面有配置方法）
+> 
+
+## 简单说下实现思路
+
+
+
+* 基于nolebase精简后的nolebase-template博客模板进行搭建
+* 通过Obsidian完成博客笔记的撰写
+* 通过Github desktop提交更新
+* 利用Netlify部署网站页面
+
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518114723.png)
+
+看似很复杂，但其实配置起来很简单
+依旧是
+0元！0代码！0难度！
+无需备案，无需服务器
+搭建自己的博客
+
+以下是逐帧教学
+
+
+
+## 简易的搭建步骤
+
+访问以下链接
+
+```
+https://github.com/Jackiexiao/nolebase-template
+```
+进入Nolebase-temolate仓库
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518130554.png)
+
+
+点击fork，让它成为自己的仓库
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518130656.png)
+
+
+
+访问Netlify
+
+
+```
+https://app.netlify.com
+```
+
+对Netlify部署感兴趣的
+可以访问以下文章进行查看
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/%E6%95%99%E7%A8%8B%E4%B8%A8Github+Netlify%E5%BC%BA%E5%BC%BA%E8%81%94%E6%89%8B%EF%BC%81%E8%BD%BB%E6%9D%BE%E5%AE%9E%E7%8E%B0%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E7%9A%84%E4%B8%8A%E7%BA%BF%E4%B8%8E%E7%BB%B4%E6%8A%A4.png)
+
+基于现有项目创建站点
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518123342.png)
+
+选择Github，授权一下自己的账号
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518123431.png)
+
+选择刚刚创建的nolespace-template
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518131014.png)
+注意：
+此处需要将**Publish directory**里的**dist**修改为==.vitepress/dist==
+
+```
+.vitepress/dist
+```
+注意不要有多余的空格，以及漏符号
+
+同时此处支持给自己的项目命名
+我这里的命名是==obsidiannote==
+如果不命名的话
+netlify会随机起个名字
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518132437.png)
+
+然后点击Deploy开始部署
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518132510.png)
+
+等待building成功
+变绿就是部署好了
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518132720.png)
+
+
+点击给出的链接即可访问
+```
+https://obsidiannote.netlify.app/
+```
+
+以下是模板网页的效果
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518133140.png)
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518133236.png)
+
+没错，就是这么简单，鼠标点点的工夫
+自己的博客网站就搭好了
+
+
+
+
+## 必要的修改美化
+
+现在，我们已经把博客网站搭建起来了
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518133140.png)
+
+但是上面的信息，依旧是模板给出的
+需要将它修改成我们自己的元素
+那怎么操作呢？
+
+
+为了方便同步和笔记更新
+我们需要用到Github Desktop这个软件
+
+首先访问以下链接
+```
+https://desktop.github.com/download/
+```
+下载Github desktop
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518145845.png)
+
+下载完毕后，安装，并登录自己的Github账号
+
+登录时网络环境有问题的可以开一下steam++
+```
+https://steampp.net/
+```
+
+安装并登录完成后
+回到我们fork后的网站模板仓库
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518150458.png)
+
+
+选择==Open with GitHub Desktop==
+这时GitHub Desktop就会自动弹出来
+在本地选择一个文件夹
+GitHub Desktop就会自动将项目克隆到本地
+
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518150838.png)
+
+点击我们设置的这个本地文件夹
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518151134.png)
+可以看到项目都克隆下来了
+
+接下来我们需要对模板网站上的一些元素进行修改
+可以使用Trae或者Vscode来打开这个文件夹
+
+```
+https://trae.com.cn
+```
+
+这里我选择使用Trae
+理论上用记事本打开也行，都只是做一些修改
+
+修改 metadata/index.ts 配置一下自己的网站信息
+配置网站标题、描述、作者等元数据
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518154852.png)
+
+再修改一下 index.md 配置一下首页
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518155456.png)
+
+可以对着模板进行修改
+外观和代码是对应的
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518133140.png)
+
+
+需要修改什么搜索即可
+我最常用的是==搜索文本==
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518192751.png)
+
+比较麻烦的是更换里面的图片
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518165137.png)
+
+
+
+一个一个删除替换
+
+> [!help]
+> 突然感觉自己公众号的logo挺朴实的
+> 考虑今年升级一下形象
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518172949.png)
+
+
+
+另外分享一个png转换svg的网站
+```
+https://convertio.co/zh/
+```
+
+
+接着修改一下笔记目录里的index.md
+这是笔记的第一个页面
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518180357.png)
+
+
+全部修改完成后
+回到我们的Github Desktop
+
+在软件右边能够详细看到修改的情况
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518184048.png)
+
+首先点击commit，
+接着点击push
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518184229.png)
+
+
+回到Netlify的页面
+可以看到我们提交的修改正在部署中
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518184543.png)
+
+
+等待部署完成后
+进入网站后可以看到效果
+
+有点怪怪的
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518184701.png)
+
+
+再简单修改一下，勉强能看了
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518185444.png)
+
+
+移动端显示画面
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/7478e92d88d8cfb974909c9174dba13.jpg)
+
+自己又美化了一下
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518192317.png)
+
+
+
+## 沉浸的撰写体验
+
+
+修改模板网站上的信息为个人的信息之后
+
+接下来我们只需专注写笔记即可
+
+打开Obsidian
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518193021.png)
+
+选择我们克隆过来后的==笔记==文件夹
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518193355.png)
+以这个文件夹作为仓库
+
+此时Obsidian的界面如下
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518193451.png)
+
+把原来的删除
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518195111.png)
+
+写博客就像和平时在Obsidian写笔记一样
+但是为了顺利地将图片上传
+还需要做一下简单的设置
+
+#### 设置图片附件
+
+ Obsidian 设置 => 文件与链接 设置如下
+- 内部链接类型 => 基于当前笔记的相对路径
+- 使用Wiki链接 => 不使用
+- 附件文件夹路径 =>当前文件所在文件夹下指定的子文件夹
+- 附件文件夹路径 => assets
+这么做有几个好处
+- 保持兼容性的markdown: 可以让文档也能在 github 中被正确渲染（github无法解析`[[双链]]`）
+- 方便迁移文件和图片，你只需要把图片文件夹和markdown文件一起复制就行（如果是全部汇总在某个文件夹下，以后复制比较麻烦）
+- 对于已有的笔记和图片链接，你可以考虑使用 obsidian 插件[obsidian-link-converter](https://github.com/ozntel/obsidian-link-converter) 来帮你做自动的转换 `[[wikilink]]` 为 相对路径 的 markdown link
+
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518201312.png)
+
+#### 标题有点小问题
+
+不知为何，一级标题不能识别
+网页上不会显示一级标题
+我暂时的解决方法是跳过一级标题
+所有都从二级标题开始
+### 笔记的属性
+模板默认给出了几个属性
+#### comment
+需要开启评论的话，不开就false
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518194916.png)
+
+#### 自定义属性
+
+支持自定义frontmatter
+在index.ts中进行添加即可
+比如我自己增加了一个名为==finished==的属性
+类型是日期Date，用于记录我发表这篇文章的时间
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518210133.png)
+
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524144431.png)
+
+
+
+## 方便的提交过程
+
+
+提交博客和提交对网站的修改的步骤一样
+Github Desktop会自动识别当前文件夹的各种变化
+当你想上传的时候
+点击Commit
+再点击Push即可
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518200607.png)
+
+在Netlify中可以看见
+我们刚刚的更新已经Published成功了
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250518200923.png)
+
+
+
+
+
+
+
+## 更进一步，绑定自己的域名
+
+
+博客还支持绑定个人域名
+
+最开始项目部署时
+我们的命名是obsidiannote
+然后netlify给我们的链接就是
+```
+https://obsidiannote.netlify.app
+```
+还是有点长了
+接下来我们把它改成我们自己的域名
+
+
+可以直接在Netlify操作
+
+也可以去cloudflare操作
+```
+https://cloudflare.com/
+```
+我习惯后者
+通过Cloudflare绑定域名的，可以参考这篇文章
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%A8%E5%A6%82%E4%BD%95%E4%BB%A5%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E4%B8%93%E5%B1%9E%E5%9F%9F%E5%90%8D%E6%9D%A5%E4%BB%A3%E7%90%86%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2.png)
+
+
+cloudflare的CNAME支持根域名部署
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524104738.png)
+
+cloudflare设置完成后
+回到Netlify进行设置
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524103325.png)
+
+填写上我们的域名后
+域名就增加了自定义域名
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524105010.png)
+
+现在不仅可以通过
+```
+https://obsidiannote.netlify.app
+```
+进行访问
+也可以通过我们自定义的域名进行访问
+```
+https://selfbalance.top
+```
+
+
+## 再进一步，开启评论功能
+
+
+giscus 利用了 [GitHub Discussions](https://docs.github.com/en/discussions) 实现的评论系统，让访客借助 GitHub 在你的网站上留下评论！
+具体配置方法
+
+- 第1步，访问 [Giscus](https://giscus.app/zh-CN) 网站， 参考网站上的说明，一步步操作，最后得到一个配置代码
+
+```
+https://giscus.app/zh-CN
+```
+
+- 第2步，在 `./vitepress/theme/index.ts` 中修改 giscus 相关配置，在该文件中搜索 `giscusTalk`, 参考说明，修改配置即可
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524162058.png)
+
+
+这样别人登录Github账号后
+就能在你的文章下面评论了
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524150303.png)
+
+
+![](https://obsidian-1324919814.cos.ap-chengdu.myqcloud.com/20250524161718.png)
+
+
+
+
+
+## 总结一下
+
+- 静态站点生成：nolebase-template模板（VitePress + Markdown）
+- 部署平台：Netlify（免费套餐含自动HTTPS、CDN） 
+- 版本控制：GitHub + GitHub Desktop 
+- 域名服务：Cloudflare（免费DNS解析+CDN）
+- 评论系统：Giscus（基于GitHub Discussions） 
+
+无需深入理解Web服务器原理，即可掌握「版本控制-静态网站-自动化部署」的完整流程； 
+对**内容创作者**：专注Markdown写作，无需处理后端逻辑，在Obsidian的沉浸式编辑
+
+「极简技术栈+最大自由度」，从点击「Fork」按钮开始，开启属于自己的博客写作之旅！
+

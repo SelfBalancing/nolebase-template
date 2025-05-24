@@ -1,5 +1,8 @@
 ---
 comment: true
+tags:
+  - 华为
+  - 笔记本电脑
 ---
 
 ## 缅怀MatebookE丨最好用的Windows二合一笔记本不再有了
